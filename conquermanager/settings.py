@@ -38,7 +38,8 @@ INSTALLED_APPS = [                      ## Aquí indicamos las liberias de terce
     'django.contrib.sessions',          # MAnejo de sesiones
     'django.contrib.messages',          # Manejo de mensajes
     'django.contrib.staticfiles',       # MAnejo de ficheros estáticos.
-    'todos'                             # Hemos añadido nuestra app/model aquí, sino Django no se entera.
+    'todos',                             # Hemos añadido nuestra app/model aquí, sino Django no se entera.
+    'django_extensions',
 ]
 
 MIDDLEWARE = [                                              ## Capas por las que pasa una request. Métodos de seg, auth,..

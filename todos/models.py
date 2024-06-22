@@ -3,16 +3,37 @@ from django.db import models
 ## Los modelos es donde vamos a definir nuestras entidades de la app.
 
 # Create your models here.
-
-
 # https://docs.djangoproject.com/es/5.0/topics/db/models/
+
+
+# Clase creada para explicar la RELACIÓN MANY-TO-ONE.
+class Family(models.Model):
+    name = models.CharField(max_length=140)
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
+    
+    class Meta:
+        verbose_name = "Familia"
+        verbose_name_plural = "Familias"
+
 class Person(models.Model):
+    # Creado para probar Many-to-one
+    """family = models.ForeignKey(   
+        Family, on_delete=models.CASCADE
+    )"""
+    
+    # Creado para Many-to-many
+    family = models.ManyToManyField(   
+        Family
+    )    
+    
     first_name = models.CharField(
         verbose_name="Nombre",
         max_length=30
         )
     last_name = models.CharField(
-        "Apellidos",       # Si es el primer campo ya coge por defecto el valor para Verbose_name.
+        "Apellidos",  # Si es el primer campo ya coge por defecto el valor para Verbose_name.
         max_length=30,
         )
     age = models.IntegerField(
@@ -25,6 +46,19 @@ class Person(models.Model):
         max_length=9,
         unique=True
         )
+    
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+    
+    # Meta attribute. Esto interfiere en la bd, tenemos que migrarte.
+    class Meta:
+       ordering = ["age"] 
+       verbose_name = "Persona"
+       verbose_name_plural = "Personas"
+       
+    
+    
+    
 
 """ 
 class Musician(models.Model):
