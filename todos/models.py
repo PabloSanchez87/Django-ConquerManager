@@ -8,7 +8,10 @@ from django.db import models
 
 # Clase creada para explicar la RELACIÓN MANY-TO-ONE.
 class Family(models.Model):
-    name = models.CharField(max_length=140)
+    name = models.CharField(
+        max_length=140,
+        unique=True
+        )
     
     def __str__(self) -> str:
         return f"{self.name}"
@@ -59,6 +62,10 @@ class Person(models.Model):
     
     
     
+
+
+
+
 
 """ 
 class Musician(models.Model):
