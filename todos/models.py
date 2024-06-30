@@ -7,6 +7,15 @@ from django.db import models
 
 
 # Clase creada para explicar la RELACIÓN MANY-TO-ONE.
+
+# Manager y modelos personalizados.
+class PersonManager(models.Manager):
+    def adults(self):
+        return self.filter(age__gt=18)
+    def childs(self):
+        return self.filter(age__lt=18)
+
+
 class Family(models.Model):
     name = models.CharField(
         max_length=140,
@@ -22,14 +31,16 @@ class Family(models.Model):
 
 class Person(models.Model):
     # Creado para probar Many-to-one
-    """family = models.ForeignKey(   
-        Family, on_delete=models.CASCADE
-    )"""
+    family = models.ForeignKey(   
+        Family, on_delete=models.CASCADE,
+        related_name="members"
+    )
     
+    """
     # Creado para Many-to-many
     family = models.ManyToManyField(   
         Family
-    )    
+    )  """  
     
     first_name = models.CharField(
         verbose_name="Nombre",
@@ -49,6 +60,8 @@ class Person(models.Model):
         max_length=9,
         unique=True
         )
+    
+    objects = PersonManager()
     
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
